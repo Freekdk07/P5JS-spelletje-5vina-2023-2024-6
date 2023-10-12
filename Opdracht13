@@ -3,10 +3,16 @@ var yJOS = 375;
 
 function setup() {
   canvas = createCanvas(450,450);
-  canvas.parent('processing');
+  canvas.parent();
   textFont("Verdana");
   textSize(14);
   frameRate(20);
+
+}
+berekenCelGrootte() {
+ this.celGrootte =
+  width/this.aantalKolommen;
+	
 }
 
 function draw() {
