@@ -1,3 +1,12 @@
+var appel = {
+  x : 100,
+  y : 50,
+  sprite  : null,
+  toon(){
+   image("images/sprites/appel_1.png");
+  }
+}
+
 class Raster {
   constructor(r,k) {
     this.aantalRijen = r;
@@ -8,6 +17,7 @@ class Raster {
   berekenCelGrootte() {
     this.celGrootte = canvas.width / this.aantalKolommen;
   }
+
   
   teken() {
     push();
@@ -38,13 +48,11 @@ class Jos {
   }
 
 
-  /*class bom {
-  constructor() {
-    this.x = floor(random(1,raster.aantalKolommen))*raster.celGrootte;
-    this.y = floor(random(0,raster.aantalRijen))*raster.celGrootte;
-  }
-  toon() {  image(appel,this.x,this.y,raster.celGrootte,raster.celGrootte);
-  }*/
+
+
+
+
+
   
 
   beweeg() {
@@ -94,11 +102,7 @@ class Vijand {
     this.x = x;
     this.y = y;
     this.sprite = null;
-    this.stapGrootte = null;
-  }
-
-
-  beweeg() {
+    this.stapGrootte ;
     this.x += floor(random(-1,2))*this.stapGrootte;
     this.y += floor(random(-1,2))*this.stapGrootte;
 
@@ -111,8 +115,30 @@ class Vijand {
   }
 }
 
+class Bom {
+  constructor for(x,y)
+  this.x = x;
+  this.y = y;
+  this.sprite = null;
+  this.strapgrootte = null;
+}
+
+beweeg (){
+  this.x += floor(random(-1,2))*this.stapGrootte;
+  this.y += floor(random(-1,2))*this.stapGrootte;
+  
+  this.x = constrain(this.x,0,canvas.width - raster.celGrootte);
+  this.y = constrain(this.y,0,canvas.height - raster.celGrootte);
+}
+
+toon() {
+  
+  image(this.sprite,this.x,this.y,raster.celGrootte,raster.celGrootte);
+
+  
 function preload() {
   brug = loadImage("images/backgrounds/dame_op_brug_1800.jpg");
+  
   
 
 
@@ -125,8 +151,6 @@ function setup() {
   textFont("Verdana");
   textSize(90);
   
-
-
   
   raster = new Raster(12,18);
   
@@ -161,6 +185,13 @@ function draw() {
   eve.toon();
   alice.toon();
   bob.toon();
+  
+  appel.toon();
+
+ 
+
+  
+   
 
 
   
