@@ -1,11 +1,10 @@
-var appel = {
+/*var appel = {
   x : 100,
   y : 50,
   sprite  : null,
-  toon(){
-   image("images/sprites/appel_1.png");
-  }
+  
 }
+*/ 
 
 class Raster {
   constructor(r,k) {
@@ -47,12 +46,14 @@ class Jos {
     this.gehaald = false;
   }
 
-
-
-
-
-
-
+  
+  /*class bom {
+  constructor() {
+    this.x = floor(random(1,raster.aantalKolommen))*raster.celGrootte;
+    this.y = floor(random(0,raster.aantalRijen))*raster.celGrootte;
+  }
+  toon() {  image(appel,this.x,this.y,raster.celGrootte,raster.celGrootte);
+  }*/
   
 
   beweeg() {
@@ -102,7 +103,7 @@ class Vijand {
     this.x = x;
     this.y = y;
     this.sprite = null;
-    this.stapGrootte ;
+    this.stapGrootte = null;
     this.x += floor(random(-1,2))*this.stapGrootte;
     this.y += floor(random(-1,2))*this.stapGrootte;
 
@@ -115,27 +116,8 @@ class Vijand {
   }
 }
 
-class Bom {
-  constructor for(x,y)
-  this.x = x;
-  this.y = y;
-  this.sprite = null;
-  this.strapgrootte = null;
-}
 
-beweeg (){
-  this.x += floor(random(-1,2))*this.stapGrootte;
-  this.y += floor(random(-1,2))*this.stapGrootte;
-  
-  this.x = constrain(this.x,0,canvas.width - raster.celGrootte);
-  this.y = constrain(this.y,0,canvas.height - raster.celGrootte);
-}
 
-toon() {
-  
-  image(this.sprite,this.x,this.y,raster.celGrootte,raster.celGrootte);
-
-  
 function preload() {
   brug = loadImage("images/backgrounds/dame_op_brug_1800.jpg");
   
@@ -185,14 +167,6 @@ function draw() {
   eve.toon();
   alice.toon();
   bob.toon();
-  
-  appel.toon();
-
- 
-
-  
-   
-
 
   
   if (eve.wordtGeraakt(alice) || eve.wordtGeraakt(bob)) {
