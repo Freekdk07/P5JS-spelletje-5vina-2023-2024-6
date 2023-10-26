@@ -1,9 +1,10 @@
+
 var appel = {
   x : 100,
   y : 50,
   sprite  : null,
   toon(){
-    image("images/sprites/appel_1.png");
+    image(Appel,400,300,raster.celGrootte, raster.celGrootte);
   }
 }
 
@@ -11,10 +12,10 @@ var aantalLevens = 3;
 
 class Bom {
   constructor() {
-   this.x = 1;  
+    this.x = 1;  
     this.y = 100;
-    //floor(random(1,raster.aantalKolommen))*raster.celGrootte;
-   // this.y = floor(random(0,raster.aantalRijen))*raster.celGrootte;*/
+  //floor(random(1,raster.aantalKolommen))*raster.celGrootte;
+   //this.y = floor(random(0,raster.aantalRijen))*raster.celGrootte;*/
   }
 
   toon() {
@@ -152,8 +153,20 @@ constructor() {
   
  function preload() {
   brug = loadImage("images/backgrounds/dame_op_brug_1800.jpg");
+  Appel = loadImage("images/sprites/appel_1.png");
 }
 
+
+
+
+var bommenArray = [];
+
+for (var b = 0;b < 60;b++) {
+  bommenArray.push(new Bom());
+}
+
+
+  
 
 function setup() {
   canvas = createCanvas(900,600);
@@ -164,6 +177,8 @@ function setup() {
 
   bom1 = new Bom();
   bom1.sprite = loadImage("images/sprites/bom.png");
+  //bom2 = new Bom();
+  //bom2.sprite = loadImage("images/sprites/bom.png");
 
   
   
@@ -200,8 +215,9 @@ function draw() {
   eve.toon();
   alice.toon();
   bob.toon()
-  //appel.toon();
+  appel.toon();
   bom1.toon();
+  //bom2.toon();
 
   fill('white');
   textSize(24);
@@ -226,7 +242,4 @@ function draw() {
     text("Je hebt gewonnen!",50,300);
     noLoop();
   }
-
-
 }
-
