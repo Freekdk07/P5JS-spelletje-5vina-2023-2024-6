@@ -1,12 +1,30 @@
-/*var appel = {
+var appel = {
   x : 100,
   y : 50,
   sprite  : null,
-  
+  toon(){
+    image("images/sprites/appel_1.png");
+  }
 }
-*/ 
 
-class Raster {
+var aantalLevens = 3;
+
+class Bom {
+  constructor() {
+   this.x = 1;  
+    this.y = 100;
+    //floor(random(1,raster.aantalKolommen))*raster.celGrootte;
+   // this.y = floor(random(0,raster.aantalRijen))*raster.celGrootte;*/
+  }
+
+  toon() {
+    image(this.sprite, this.x, this.y, raster.celGrootte, raster.celGrootte);
+  }
+}
+
+
+
+ class Raster {
   constructor(r,k) {
     this.aantalRijen = r;
     this.aantalKolommen = k;
@@ -46,14 +64,14 @@ class Jos {
     this.gehaald = false;
   }
 
-  
-  /*class bom {
+  /* bbr: deze klasse begint middenin de klasse Jos*/
+ /* class bom {
   constructor() {
     this.x = floor(random(1,raster.aantalKolommen))*raster.celGrootte;
     this.y = floor(random(0,raster.aantalRijen))*raster.celGrootte;
-  }
-  toon() {  image(appel,this.x,this.y,raster.celGrootte,raster.celGrootte);
   }*/
+  toon() {  image(appel,this.x,this.y,raster.celGrootte,raster.celGrootte);
+  }
   
 
   beweeg() {
@@ -107,24 +125,35 @@ class Vijand {
     this.x += floor(random(-1,2))*this.stapGrootte;
     this.y += floor(random(-1,2))*this.stapGrootte;
 
+  }
+  beweeg(){
+    this.x += floor(random(-1,2))*this.stapGrootte;
+    this.y += floor(random(-1,2))*this.stapGrootte;
     this.x = constrain(this.x,0,canvas.width - raster.celGrootte);
     this.y = constrain(this.y,0,canvas.height - raster.celGrootte);
   }
-  
+  /*bbr: waar is Beweeg() gebleven? Gebruik zo nodig History om rollback te doen*/
   toon() {
     image(this.sprite,this.x,this.y,raster.celGrootte,raster.celGrootte);
   }
 }
 
-
-
-function preload() {
-  brug = loadImage("images/backgrounds/dame_op_brug_1800.jpg");
-  
-  
-
-
+/*
+class bom {
+constructor() {
+  this.x = floor(random(1,raster.aantalKolommen))*raster.celGrootte;
+  this.y = floor(random(0,raster.aantalRijen))*raster.celGrootte;
 }
+
+   toon() {  image(bom,this.x,this.y,raster.celGrootte,raster.celGrootte);
+    }
+}
+*/
+  
+ function preload() {
+  brug = loadImage("images/backgrounds/dame_op_brug_1800.jpg");
+}
+
 
 function setup() {
   canvas = createCanvas(900,600);
@@ -132,6 +161,10 @@ function setup() {
   frameRate(10);
   textFont("Verdana");
   textSize(90);
+
+  bom1 = new Bom();
+  bom1.sprite = loadImage("images/sprites/bom.png");
+
   
   
   raster = new Raster(12,18);
@@ -166,20 +199,31 @@ function draw() {
   bob.beweeg();
   eve.toon();
   alice.toon();
-  bob.toon();
+  bob.toon()
+  //appel.toon();
+  bom1.toon();
+
+  fill('white');
+  textSize(24);
+  text('Aantal levens: ' + aantalLevens, 10, 30);
+ 
+  
+ 
 
   
   if (eve.wordtGeraakt(alice) || eve.wordtGeraakt(bob)) {
+    aantalLevens--;
     background('red');
     fill('white');
     text("Je hebt verloren!", 30, 300)
-    noLoop();
+    //noLoop();
   }
-  
+
+
   if (eve.gehaald) {
     background('green');
     fill('white');
-    text("Je hebt gewonnen!",30,300);
+    text("Je hebt gewonnen!",50,300);
     noLoop();
   }
 
