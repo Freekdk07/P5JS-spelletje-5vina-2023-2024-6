@@ -15,7 +15,7 @@ var aantalLevens = 1;
 class Bom {
   constructor() {
     this.x = random(0,900);
-    this.y = random(0,6);
+    this.y = random(0,600);
     //floor(random(1,raster.aantalKolommen))*raster.celGrootte;
     //this.y = floor(random(0,raster.aantalRijen))*raster.celGrootte;
   }
