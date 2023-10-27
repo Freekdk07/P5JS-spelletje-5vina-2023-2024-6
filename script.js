@@ -14,8 +14,10 @@ var aantalLevens = 1;
 
 class Bom {
   constructor() {
-    this.x = random(0,900);
-    this.y = random(0,6);
+    this.x = 600;
+    this.y = 200;
+    //this.x = 100;
+    //this.y = 100;
     //floor(random(1,raster.aantalKolommen))*raster.celGrootte;
     //this.y = floor(random(0,raster.aantalRijen))*raster.celGrootte;
   }
@@ -122,6 +124,7 @@ class Jos {
 }
 
 
+
 class Vijand {
   constructor(x, y) {
     this.x = x;
@@ -198,9 +201,6 @@ function setup() {
   bom1.sprite = loadImage("images/sprites/bom.png");
 
 
-
-
-
   raster = new Raster(12, 18);
 
   raster.berekenCelGrootte();
@@ -236,8 +236,6 @@ function draw() {
   bob.toon();
   if (eve.wordtGeraakt(bom1)) {
     aantalLevens--;
-    bom1.x = -100;
-    bom1.y = -100;
   }
   
   bom1.toon();
@@ -250,16 +248,9 @@ function draw() {
     aantalLevens += 1;
   }
   
-
-
-
   fill('white');
   textSize(24);
   text('Aantal levens: ' + aantalLevens, 10, 30);
-
-
-
-
 
  if ((eve.wordtGeraakt(alice) || eve.wordtGeraakt(bob)) || (aantalLevens == 0)) {
     aantalLevens--;
@@ -268,7 +259,6 @@ function draw() {
     text("Je hebt verloren!", 350, 300)
     noLoop();
   }
-
 
   if (eve.gehaald) {
     background('green');
