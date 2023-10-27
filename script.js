@@ -9,20 +9,46 @@ var appel = {
   }
 }
 
+//var aantalLevens = 1;//
 var aantalLevens = 1;
+var isGameOver = false; // New variable to track game over state
+
+// Add key press event listener to restart the game on "Enter" key press
+function keyPressed() {
+  if (keyCode === ENTER) {
+    resetGame();
+  }
+}
+
+function resetGame() {
+  bommen = [];
+  aantalLevens = 1;
+  eve.x = 0;
+  eve.y = 300;
+  eve.gehaald = false;
+  alice.x = 700;
+  alice.y = 200;
+  bob.x = 600;
+  bob.y = 400;
+  for (let i = 0; i < 4; i++) {
+    let newBom = new Bom();
+    newBom.sprite = loadImage("images/sprites/bom.png");
+    newBom.x = floor(random(9, 18)) * 50;
+    newBom.y = floor(random(1, 12)) * 50;
+    bommen.push(newBom);
+  }
+  loop();
+}
 
 
 class Bom {
   constructor() {
-    this.x = 600;
-    this.y = 200;
-    //this.x = 100;
-    //this.y = 100;
-    //floor(random(1,raster.aantalKolommen))*raster.celGrootte;
-    //this.y = floor(random(0,raster.aantalRijen))*raster.celGrootte;
+    this.x = floor(random(9,18))*50;
+    this.y = floor(random(1,12))*50;
   }
   toon() {
-    image(this.sprite, this.x, this.y, raster.celGrootte, raster.celGrootte);
+    image(this.sprite, this.x, this.y, raster.celGrootte, 
+    raster.celGrootte);
   }
 }
 
@@ -50,7 +76,8 @@ class Raster {
         } else {
           noFill();
         }
-        rect(kolom * this.celGrootte, rij * this.celGrootte, this.celGrootte, this.celGrootte);
+        rect(kolom * this.celGrootte, rij * this.celGrootte, 
+        this.celGrootte, this.celGrootte);
       }
     }
   }
@@ -70,15 +97,10 @@ class Jos {
   eet(appel){
     return this.x == 400 && this.y == 300;
   }
-
-  /* bbr: deze klasse begint middenin de klasse Jos*/
-  /* class bom {
-   constructor() {
-     this.x = floor(random(1,raster.aantalKolommen))*raster.celGrootte;
-     this.y = floor(random(0,raster.aantalRijen))*raster.celGrootte;
-   }*/
+  
   toon() {
-    image(appel, this.x, this.y, raster.celGrootte, raster.celGrootte);
+    image(appel, this.x, this.y, raster.celGrootte, 
+    raster.celGrootte);
   }
 
 
@@ -95,13 +117,25 @@ class Jos {
       this.y -= this.stapGrootte;
       this.frameNummer = 4;
     }
+    
+    if (eve.wordtGeraakt(bom1)) {
+      if (aantalLevens > 0) {
+        aantalLevens--;
+      }
+    }
+    
+    if (eve.wordtGeraakt(bom1)) {
+      aantalLevens -= 1;
+    }
+    
     if (keyIsDown(83)) {
       this.y += this.stapGrootte;
       this.frameNummer = 5;
     }
 
     this.x = constrain(this.x, 0, canvas.width);
-    this.y = constrain(this.y, 0, canvas.height - raster.celGrootte);
+    this.y = constrain(this.y, 0, canvas.height - 
+    raster.celGrootte);
 
     if (this.x == canvas.width) {
       this.gehaald = true;
@@ -119,10 +153,10 @@ class Jos {
   }
 
   toon() {
-    image(this.animatie[this.frameNummer], this.x, this.y, raster.celGrootte, raster.celGrootte);
+    image(this.animatie[this.frameNummer], this.x, this.y, 
+    raster.celGrootte, raster.celGrootte);
   }
 }
-
 
 
 class Vijand {
@@ -138,55 +172,22 @@ class Vijand {
   beweeg() {
     this.x += floor(random(-1, 2)) * this.stapGrootte;
     this.y += floor(random(-1, 2)) * this.stapGrootte;
-    this.x = constrain(this.x, 0, canvas.width - raster.celGrootte);
-    this.y = constrain(this.y, 0, canvas.height - raster.celGrootte);
+    this.x = constrain(this.x, 0, canvas.width - 
+    raster.celGrootte);
+    this.y = constrain(this.y, 0, canvas.height - 
+    raster.celGrootte);
   }
-  /*bbr: waar is Beweeg() gebleven? Gebruik zo nodig History om rollback te doen*/
-  toon() {
+
+    toon() {
     image(this.sprite, this.x, this.y, raster.celGrootte, raster.celGrootte);
   }
 }
-
-
-/*
-class Bom {
-  constructor() {
-    this.x = floor(random(1, raster.aantalKolommen)) * raster.celGrootte;
-    this.y = floor(random(0, raster.aantalRijen)) * raster.celGrootte;
-    this.sprite = null;
-    this.stapGrootte = null;
-    this.x += floor(random(-1, 2)) * this.stapGrootte;
-    this.y += floor(random(-1, 2)) * this.stapGrootte;
-  }
-
-  beweeg() {
-    this.x += floor(random(-1, 2)) * this.stapGrootte;
-    this.y += floor(random(-1, 2)) * this.stapGrootte;
-    this.x = constrain(this.x, 0, canvas.width - raster.celGrootte);
-    this.y = constrain(this.y, 0, canvas.height - raster.celGrootte);
-  }
-}
-// Create 4 more bombs with different speeds
-let bom2 = new Bom();
-bom2.stapGrootte = 2 * eve.stapGrootte;
-bom2.sprite = loadImage("images/sprites/bom.png");
-let bom3 = new Bom();
-bom3.stapGrootte = 3 * eve.stapGrootte;
-bom3.sprite = loadImage("images/sprites/bom.png");
-let bom4 = new Bom();
-bom4.stapGrootte = 4 * eve.stapGrootte;
-bom4.sprite = loadImage("images/sprites/bom.png");
-let bom5 = new Bom();
-bom5.stapGrootte = 5 * eve.stapGrootte;
-bom5.sprite = loadImage("images/sprites/bom.png");
-*/
 
 
 function preload() {
   brug = loadImage("images/backgrounds/dame_op_brug_1800.jpg");
   Appel = loadImage("images/sprites/appel_1.png");
 }
-
 
 
 function setup() {
@@ -196,16 +197,20 @@ function setup() {
   textFont("Verdana");
   textSize(90);
 
-  
   bom1 = new Bom();
   bom1.sprite = loadImage("images/sprites/bom.png");
 
+  let newBom = new Bom();
+  newBom.sprite = loadImage("images/sprites/bom.png");
+  newBom.x = floor(random(9, 18)) * 50;
+  newBom.y = floor(random(1, 12)) * 50;
+  bommen.push(newBom);
 
+
+  bommen = [];
   raster = new Raster(12, 18);
 
   raster.berekenCelGrootte();
-
-
 
   eve = new Jos();
   eve.stapGrootte = 1 * raster.celGrootte;
@@ -216,14 +221,23 @@ function setup() {
 
   alice = new Vijand(700, 200);
   alice.stapGrootte = 1 * eve.stapGrootte;
-  alice.sprite = loadImage("images/sprites/Alice100px/Alice.png");
+  alice.sprite = 
+  loadImage("images/sprites/Alice100px/Alice.png");
 
   bob = new Vijand(600, 400);
   bob.stapGrootte = 1 * eve.stapGrootte;
   bob.sprite = loadImage("images/sprites/Bob100px/Bob.png");
 
-
+  for (let i = 0; i < 4; i++) {
+    let newBom = new Bom();
+    newBom.sprite = loadImage("images/sprites/bom.png");
+    newBom.x = floor(random(9, 18)) * 50;
+    newBom.y = floor(random(1, 12)) * 50;
+    bommen.push(newBom);
+  }
+  
 }
+
 
 function draw() {
   background(brug);
@@ -241,9 +255,7 @@ function draw() {
   bom1.toon();
   appel.toon();
 
-
-  
-
+  // Controleren of de speler de appel eet
   if (eve.eet(appel)) {
     aantalLevens += 1;
   }
@@ -252,18 +264,25 @@ function draw() {
   textSize(24);
   text('Aantal levens: ' + aantalLevens, 10, 30);
 
- if ((eve.wordtGeraakt(alice) || eve.wordtGeraakt(bob)) || (aantalLevens == 0)) {
+ if ((eve.wordtGeraakt(alice) || eve.wordtGeraakt(bob)) || (aantalLevens <= 0)){
     aantalLevens--;
     background('red');
     fill('white');
-    text("Je hebt verloren!", 350, 300)
+    text("Helaas! Je hebt verloren!", 300, 300)
     noLoop();
+   textSize(20);
+   text("Klik op Enter om opnieuw te spelen", 290, 350);
   }
 
   if (eve.gehaald) {
     background('green');
     fill('white');
-    text("Je hebt gewonnen!", 350, 300);
+    text("Gefeliciteerd! Je hebt gewonnen!", 290, 300);
     noLoop();
+     textSize(20);
+     text("Klik op Enter om opnieuw te spelen", 290, 350);
   }
+  
+  
+
 }
